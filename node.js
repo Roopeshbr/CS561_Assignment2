@@ -1,15 +1,44 @@
-const express = require('express')
-const app = express()
-const port = 3000
-var request = require("request")
+var express = require('express')
+var app = express()
+var cors = require('cors')
+const key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3Blc2giLCJwYXNzd29yZCI6MTIzfQ.u_yo4uukxyaKhgmfKfuv_9lRqzV0t1RiDn_yTne3hQ0"
 
-app.get('/data/2.5/weather', get_weather)
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cors());
 
-function get_weather(req,response)
-{
-	response.json({"coord":{"lon":-123.262,"lat":44.5646},"weather":[{"id":741,"main":"Fog","description":"fog","icon":"50n"}],"base":"stations","main":{"temp":278.16,"feels_like":278.16,"temp_min":275.73,"temp_max":281,"pressure":1025,"humidity":78},"visibility":402,"wind":{"speed":0,"deg":0},"clouds":{"all":100},"dt":1642227125,"sys":{"type":2,"id":2012991,"country":"US","sunrise":1642175199,"sunset":1642208235},"timezone":-28800,"id":5720727,"name":"Corvallis","cod":200})
+
+app.get('/v1/weather',get_weather_v1)
+app.get('/v1/hello',get_hello)
+app.post('/v1/auth',post_auth)
+
+
+
+function get_weather_v1(req, res) {
+        res.json({"coord":{"lon":-123.262,"lat":44.5646},"weather":[{"id":800,"main":"Clear","description":"clear sky","icon":"01n"}],"base":"stations","main":{"temp":282.61,"feels_like":282.61,"temp_min":280.58,"temp_max":285.29,"pressure":1018,"humidity":84},"visibility":10000,"wind":{"speed":0.89,"deg":225,"gust":0.89},"clouds":{"all":0},"dt":1642038331,"sys":{"type":2,"id":2040223,"country":"US","sunrise":1642002454,"sunset":1642035291},"timezone":-28800,"id":5720727,"name":"Corvallis","cod":200})   
 }
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:$\{port\}`)
-})
+function get_hello(req,res){
+       res.json({"hello": "Hi I am roopesh"})
+}
+// const fs = require("fs");
+
+function post_auth(req,res){
+    let usernames = ['roopesh','roopi','roofi']
+    let passwords = ['123','456','789']
+    let username = req.body.username
+    let pwd = req.body.password
+
+    if(usernames.includes(username)){
+      if(passwords.includes(pwd)){
+          res.json({
+            "access-token": key,
+            "expires": "2022-01-11T22:18:26.625Z"
+          })
+      }
+  }
+}
+
+app.listen(3000)
+console.log('Node.js Express server is running on port 3000..')
