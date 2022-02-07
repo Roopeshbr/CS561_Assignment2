@@ -113,7 +113,7 @@ definitions:
         type: "string"
       token:
         type: "string"
-        description: "Get Token"
+        description: "Get the Token"
     
     xml:
       name: "User"
