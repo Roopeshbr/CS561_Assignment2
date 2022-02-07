@@ -47,7 +47,7 @@ paths:
         type: "string"
       - name: "token"
         in: "query"
-        description: "Enter your access token"
+        description: "Enter the access token"
         required: true
         type: "string"
       responses:
