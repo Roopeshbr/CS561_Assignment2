@@ -101,7 +101,11 @@ definitions:
         type: "string"
       password:
         type: "string"
+      token:
+        type: "string"
         description: "Get Token"
+    
     xml:
       name: "User"
+  
   
